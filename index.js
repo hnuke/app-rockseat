@@ -1,5 +1,7 @@
 const { select, input, checkbox } = require('@inquirer/prompts')
 
+
+let mensagem = "";
 let metas = []
 
 const cadastrarMeta = async () => {
@@ -12,6 +14,7 @@ const cadastrarMeta = async () => {
 
     metas.push({value: meta, checked: false})
     
+    mensagem = "Meta cadastrada com sucesso"
 }
 
 
@@ -27,7 +30,7 @@ const listarMetas = async () => {
     })
 
     if (respostas.length == 0){
-        console.log("Nenhuma meta selecionada!")
+        mensagem = "Nenhuma meta selecionada!"
         return
     }
 
@@ -41,7 +44,7 @@ const listarMetas = async () => {
         meta.checked = true
     })
 
-    console.log("Metas concluídas ou não...")
+   mensagem = "Metas concluídas ou não..."
 
 }
 
@@ -73,7 +76,7 @@ const metasAbertas = async () => {
     })
 
     if (abertas.length == 0){
-        console.log("Não existem metas abertas!")
+        mensagem = "Não existem metas abertas!"
         return
     }
 
@@ -96,7 +99,7 @@ const deletarMetas = async () => {
     })
 
     if (itensADeletar.length == 0 ){
-        console.log("Nenhum item para deletar")
+        mensagem = "Nenhum item para deletar"
         return
     }
 
@@ -106,12 +109,21 @@ const deletarMetas = async () => {
         })
     })
 
-    console.log("Metas deletadas com sucesso!")
+    mensagem = "Metas deletadas com sucesso!"
+}
+
+const mostrarMensagem = () => {
+    console.clear();
+    if (mensagem != ""){
+        console.log(mensagem)
+        console.log("")
+        mensagem = ""
+    }
 }
 
 const start = async () => {
-
     while(true){
+        mostrarMensagem()
         const opcao = await select({
             message: "Menu >",
             choices: [
